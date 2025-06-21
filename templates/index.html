@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNA Mutation Predictor</title>
+</head>
+<body>
+    <h1>🧬 DNA Mutation Effect Predictor</h1>
+    <form method="POST">
+        <label>DNA Sequence:</label><br>
+        <textarea name="dna" rows="5" cols="60"></textarea><br><br>
+
+        <label>Mutation Position (amino acid, 1-based):</label><br>
+        <input type="number" name="position"><br><br>
+
+        <label>New Amino Acid (single letter):</label><br>
+        <input type="text" name="new_aa" maxlength="1"><br><br>
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if result %}
+        <h2>🔎 Result</h2>
+        <p><strong>Original Protein:</strong> {{ wt_protein }}</p>
+        <p><strong>Mutated Protein:</strong> {{ mut_protein }}</p>
+        <p><strong>Log-Likelihood Ratio:</strong> {{ llr_score }}</p>
+        <p><strong>Prediction:</strong> {{ result }}</p>
+    {% endif %}
+</body>
+</html>
