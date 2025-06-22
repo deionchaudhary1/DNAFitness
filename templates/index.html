@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>DNA Mutation Predictor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>🧬 DNA Mutation Effect Predictor</h1>
-    <form method="POST">
-        <label>DNA Sequence:</label><br>
-        <textarea name="dna" rows="5" cols="60"></textarea><br><br>
+    <div class="container">
+        <h1>🧬 DNA Mutation Effect Predictor</h1>
+        <form method="POST">
+            <label for="dna">DNA Sequence:</label>
+            <textarea name="dna" id="dna" rows="4" placeholder="Enter DNA sequence..."></textarea>
 
-        <label>Mutation Position (amino acid, 1-based):</label><br>
-        <input type="number" name="position"><br><br>
+            <label for="position">Mutation Position (amino acid, 1-based):</label>
+            <input type="number" name="position" id="position" placeholder="e.g. 42">
 
-        <label>New Amino Acid (single letter):</label><br>
-        <input type="text" name="new_aa" maxlength="1"><br><br>
+            <label for="new_aa">New Amino Acid (single letter):</label>
+            <input type="text" name="new_aa" id="new_aa" maxlength="1" placeholder="e.g. K">
 
-        <input type="submit" value="Predict">
-    </form>
+            <button type="submit">Predict</button>
+        </form>
 
-    {% if result %}
-        <h2>🔎 Result</h2>
-        <p><strong>Original Protein:</strong> {{ wt_protein }}</p>
-        <p><strong>Mutated Protein:</strong> {{ mut_protein }}</p>
-        <p><strong>Log-Likelihood Ratio:</strong> {{ llr_score }}</p>
-        <p><strong>Prediction:</strong> {{ result }}</p>
-    {% endif %}
+        {% if result %}
+            <div class="result">
+                <h2>🔍 Result</h2>
+                <p><strong>Original Protein:</strong> {{ wt_protein }}</p>
+                <p><strong>Mutated Protein:</strong> {{ mut_protein }}</p>
+                <p><strong>Log-Likelihood Ratio:</strong> {{ llr_score }}</p>
+                <p><strong>Prediction:</strong> {{ result }}</p>
+            </div>
+        {% endif %}
+    </div>
 </body>
 </html>
