@@ -36,3 +36,69 @@ def index():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+
+
+
+'''
+from flask import Flask, render_template, request
+from translator import translate_dna
+from model_utils import compute_log_likelihood, interpret_llr
+from Bio.Seq import Seq
+
+app = Flask(__name__)
+
+def mutate_dna(dna, pos, new_base):
+    if pos < 1 or pos > len(dna):
+        return None
+    dna = dna.upper()
+    new_dna = dna[:pos-1] + new_base.upper() + dna[pos:]
+    return new_dna
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    result = None
+    wt_protein = ""
+    mut_protein = ""
+    wt_dna = ""
+    mut_dna = ""
+    llr_score = None
+    aa_change = None
+
+    if request.method == "POST":
+        wt_dna = request.form["dna"].upper().replace(" ", "").replace("\n", "")
+        position = int(request.form["position"])
+        new_base = request.form.get("new_base", "").upper()
+
+        if new_base not in ['A', 'T', 'C', 'G']:
+            result = "❌ Invalid DNA base (must be A, T, C, or G)."
+        else:
+            mut_dna = mutate_dna(wt_dna, position, new_base)
+            if mut_dna is None:
+                result = "❌ Mutation position out of bounds."
+            else:
+                wt_protein = translate_dna(wt_dna)
+                mut_protein = translate_dna(mut_dna)
+
+                if not wt_protein or not mut_protein:
+                    result = "❌ Could not translate DNA to protein. Check sequence validity."
+                else:
+                    # Check if mutation changed protein
+                    diff = [(i, a, b) for i, (a, b) in enumerate(zip(wt_protein, mut_protein), start=1) if a != b]
+                    aa_change = diff[0] if diff else None
+
+                    ll_wt = compute_log_likelihood(wt_protein)
+                    ll_mut = compute_log_likelihood(mut_protein)
+                    llr_score = round(ll_mut - ll_wt, 2)
+                    result = interpret_llr(llr_score)
+
+    return render_template("index.html", result=result,
+                           wt_dna=wt_dna, mut_dna=mut_dna,
+                           wt_protein=wt_protein, mut_protein=mut_protein,
+                           aa_change=aa_change, llr_score=llr_score)
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+'''
