@@ -2,7 +2,7 @@ from transformers import EsmTokenizer, EsmForMaskedLM
 import torch
 
 # Load ESM model
-model_name = "facebook/esm1v_t33_650M_UR90S_1"
+model_name = "facebook/esm2_t6_8M_UR50D"
 tokenizer = EsmTokenizer.from_pretrained(model_name)
 model = EsmForMaskedLM.from_pretrained(model_name)
 model.eval()

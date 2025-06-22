@@ -1,37 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DNA Mutation Predictor</title>
+</head>
 <body>
     <h1>🧬 DNA Mutation Effect Predictor</h1>
-
-    <h2>🤖 Generate DNA with Claude AI</h2>
-    <p>Describe the kind of DNA sequence you want, and Claude will generate a realistic DNA sequence for you!</p>
-
-    <form method="POST">
-        <label>Describe the DNA:</label><br>
-        <input type="text" name="dna_prompt" size="60" placeholder="e.g., exon coding for a membrane protein"><br><br>
-        <input type="submit" name="generate" value="Generate DNA with Claude">
-    </form>
-
-    {% if generated_dna %}
-        <h3>🧬 Claude Generated DNA Sequence:</h3>
-        <textarea rows="5" cols="60" readonly>{{ generated_dna }}</textarea><br><br>
-        <p>⬆️ You can now edit this sequence or use it below to test mutations!</p>
-    {% endif %}
-
-    <h2>🔬 Test a Mutation</h2>
     <form method="POST">
         <label>DNA Sequence:</label><br>
-        <textarea name="dna" rows="5" cols="60" placeholder="Paste DNA here"></textarea><br><br>
+        <textarea name="dna" rows="5" cols="60"></textarea><br><br>
 
-        <label>Mutation Position (amino acid, 1-based):</label><br>
-        <input type="number" name="position"><br><br>
+            <label for="position">Mutation Position (amino acid, 1-based, low number):</label>
+            <input type="number" name="position" id="position" placeholder="e.g. 4">
 
-        <label>New Amino Acid (single letter):</label><br>
-        <input type="text" name="new_aa" maxlength="1"><br><br>
+            <label for="new_aa">New Amino Acid (single letter):</label>
+            <input type="text" name="new_aa" id="new_aa" maxlength="1" placeholder="e.g. K">
 
-        <input type="submit" value="Predict Effect of Mutation">
+        <input type="submit" value="Predict">
     </form>
 
     {% if result %}
-        <h2>🔎 Prediction Result</h2>
+        <h2>🔎 Result</h2>
         <p><strong>Original Protein:</strong> {{ wt_protein }}</p>
         <p><strong>Mutated Protein:</strong> {{ mut_protein }}</p>
         <p><strong>Log-Likelihood Ratio:</strong> {{ llr_score }}</p>
