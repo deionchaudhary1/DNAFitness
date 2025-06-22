@@ -13,7 +13,10 @@ Only output the DNA sequence using A, T, C, and G. Limit to 100-300 bases.
 """
     response = client.messages.create(
         model="claude-3-sonnet-20240229",
+<<<<<<< HEAD
         
+=======
+>>>>>>> a450951e06b9341ac3badc2f1927f2a6a9360775
         max_tokens=500,
         temperature=0.7,
         messages=[{"role": "user", "content": user_prompt}]
